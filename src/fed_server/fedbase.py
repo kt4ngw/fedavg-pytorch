@@ -5,13 +5,12 @@ from src.fed_client.client import BaseClient
 from torch.utils.data import TensorDataset
 from torch.utils.data import DataLoader
 import copy
-from src.utils.tools import Metrics
+from src.utils.metrics import Metrics
 import torch.nn.functional as F
 criterion = F.cross_entropy
 
 
 class BaseFederated(object):
-
     def __init__(self, options, dataset, clients_label, model=None, optimizer=None, name=''):
         if model is not None and optimizer is not None:
             self.model = model
@@ -60,11 +59,11 @@ class BaseFederated(object):
         raise NotImplementedError
 
     def setup_clients(self, dataset, clients_label):
-        train_data = dataset.trainData
-        train_label = dataset.trainLabel
+        train_data = dataset.train_data
+        train_label = dataset.train_label
         all_client = []
         for i in range(len(clients_label)):
-            local_client = BaseClient(self.options, i, self.clients_attr, TensorDataset(torch.tensor(train_data[self.clients_label[i]]),
+            local_client = BaseClient(self.options, i, TensorDataset(torch.tensor(train_data[self.clients_label[i]]),
                                                 torch.tensor(train_label[self.clients_label[i]])), self.model, self.optimizer)
             all_client.append(local_client)
 
@@ -81,11 +80,9 @@ class BaseFederated(object):
             stats.append(stat)
             if True:
                 print("Round: {:>2d} | CID: {: >3d} ({:>2d}/{:>2d})| "
-                      "Loss {:>.4f} | Acc {:>5.2f}% | Time: {:>.2f}s | LocalEngery: {:>.4f}| UploadEngery: {:>.4f}"
-                      "| LocalDelay: {:>.4f}| UploadDelay: {:>.4f}".format(
+                      "Loss {:>.4f} | Acc {:>5.2f}% | Time: {:>.2f}s ".format(
                        round_i, client.id, i, int(self.per_round_c_fraction * self.clients_num),
-                       stat['loss'], stat['acc']*100, stat['time'], client.getLocalEngery(), client.getUploadEngery(),
-                       client.getLocalDelay(), client.getUploadDelay()))
+                       stat['loss'], stat['acc'] * 100, stat['time'], ))
         return local_model_paras_set, stats
 
 
@@ -124,10 +121,10 @@ class BaseFederated(object):
     def global_test(self, use_test_data=True):
         assert self.latest_global_model is not None
         self.set_model_parameters(self.latest_global_model)
-        testData = self.dataset.testData
-        testLabel = self.dataset.testLabel
-        print("testLabel", testLabel)
-        testDataLoader = DataLoader(TensorDataset(torch.tensor(testData), torch.tensor(testLabel)), batch_size=10, shuffle=False)
+        test_data = self.dataset.test_data
+        test_label = self.dataset.test_label
+        print("testLabel", test_label)
+        testDataLoader = DataLoader(TensorDataset(torch.tensor(test_data), torch.tensor(test_label)), batch_size=10, shuffle=False)
         test_loss = test_acc = test_total = 0.
         with torch.no_grad():
             for X, y in testDataLoader:

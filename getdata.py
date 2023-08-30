@@ -6,18 +6,18 @@ import numpy as np
 import os
 import gzip
 class GetDataSet():
-    def __init__(self, dataSetName):
-        self.dataSetName = dataSetName
+    def __init__(self, dataset_name):
+        self.dataset_name = dataset_name
 
-        self.trainData = None
-        self.trainLabel = None
-        self.trainDataSize = None
+        self.train_data = None
+        self.train_label = None
+        self.train_data_size = None
 
-        self.testData = None
-        self.testLabel = None
-        self.testDataSize = None
+        self.test_data = None
+        self.test_label = None
+        self.test_data_size = None
 
-        if self.dataSetName == 'MNIST' or self.dataSetName == 'mnist':
+        if self.dataset_name == 'MNIST' or self.dataset_name == 'mnist':
             self.mnistDataDistribution()
 
     def mnistDataDistribution(self, ):
@@ -58,11 +58,11 @@ class GetDataSet():
         test_images = test_images.astype(np.float32)
         test_images = np.multiply(test_images, 1.0 / 255.0)
 
-        self.trainData = train_images
-        self.trainLabel = np.argmax(train_labels == 1, axis = 1)
-        self.testData = test_images
-        self.testLabel = np.argmax(test_labels == 1, axis = 1)
-        print(self.trainData.shape)
+        self.train_data = train_images
+        self.train_label = np.argmax(train_labels == 1, axis = 1)
+        self.test_data = test_images
+        self.test_label = np.argmax(test_labels == 1, axis = 1)
+        print(self.train_data.shape)
 
 
 
@@ -109,3 +109,7 @@ class GetDataSet():
         labels_one_hot = np.zeros((num_labels, num_classes))
         labels_one_hot.flat[index_offset + labels_dense.ravel()] = 1
         return labels_one_hot
+
+
+g = GetDataSet("MNIST")
+print(g.train_label)

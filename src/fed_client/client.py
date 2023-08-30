@@ -10,17 +10,13 @@ mse_loss = nn.MSELoss()
 
 
 class BaseClient():
-    def __init__(self, options, id, attr, local_dataset, model, optimizer, ):
+    def __init__(self, options, id, local_dataset, model, optimizer, ):
         self.options = options
         self.id = id
         self.local_dataset = local_dataset
         self.model = model
         self.gpu = options['gpu']
         self.optimizer = optimizer
-        self.attr_dict = attr.get_client_attr(self.id)
-
-    def get_client_specific_attribute(self,):
-        return self.attr_dict.get_client_attr(self.id)
 
     def get_model_parameters(self):
         state_dict = self.model.state_dict()
@@ -63,9 +59,7 @@ class BaseClient():
                 train_acc += correct
                 train_total += target_size
         local_model_paras = self.get_model_parameters()
-        comp = self.options['local_epoch'] * train_total * self.flops
         return_dict = {"id": self.id,
-                       "comp": comp,
                        "loss": train_loss / train_total,
                        "acc": train_acc / train_total}
 
