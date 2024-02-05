@@ -14,7 +14,7 @@ class FedAvgTrainer(BaseFederated):
     def train(self):
         print('>>> Select {} clients per round \n'.format(int(self.per_round_c_fraction * self.clients_num)))
 
-        self.latest_global_model = self.get_model_parameters()
+        # self.latest_global_model = self.get_model_parameters()
         for round_i in range(self.num_round):
 
             self.test_latest_model_on_testdata(round_i)

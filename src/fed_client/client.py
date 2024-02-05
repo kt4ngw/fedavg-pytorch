@@ -58,7 +58,7 @@ class BaseClient():
                 train_loss += loss.item() * y.size(0)
                 train_acc += correct
                 train_total += target_size
-        local_model_paras = self.get_model_parameters()
+        local_model_paras = copy.deepcopy(self.get_model_parameters())
         return_dict = {"id": self.id,
                        "loss": train_loss / train_total,
                        "acc": train_acc / train_total}
