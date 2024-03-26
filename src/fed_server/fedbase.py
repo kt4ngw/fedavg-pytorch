@@ -27,8 +27,7 @@ class BaseFederated(object):
         self.name = '_'.join([name, f'wn{int(self.per_round_c_fraction * self.clients_num)}',
                               f'tn{len(self.clients)}'])
         self.metrics = Metrics(options, self.clients, self.name)
-        self.latest_global_model = self.get_model_parameters()
-
+        self.latest_global_model = copy.deepcopy(self.get_model_parameters())
 
     @staticmethod
     def move_model_to_gpu(model, options):
