@@ -1,5 +1,5 @@
 
-## 1 Get Start
+## 1 Install Enviornment
 
 1.1 Create and activate conda virtual environment / 创建 和 激活 conda虚拟环境
 ```
@@ -21,6 +21,18 @@ Besides,
 
 2025-03-09 The conda environment is exported as environment.yml
 
+
+## 2 Quick Start
+
+you can enter the code below to run the federated learning demo. 
+
+```
+python main.py
+```
+
+
+
+## Some final words
 ---
 en: If this repository has been helpful to you, could you please give it a star? It would be a great honor and I would be very appreciated! By the way, you are welcome to fork this repository, but please indicate the source in code or others.
 
