@@ -31,7 +31,7 @@ python main.py
 ```
 
 ## Acknowledgement
-This repository needs to thank this paper ``Communication-Efficient Learning of Deep Networks from Decentralized Data''.
+This repository needs to thank this paper, i.e, ``Communication-Efficient Learning of Deep Networks from Decentralized Data.''.
 
 ## Some final words
 en: If this repository has been helpful to you, could you please give it a star? It would be a great honour, and I would very much appreciate it! You are welcome to fork this repository, but please indicate the source in code or others.
