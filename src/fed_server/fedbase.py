@@ -129,14 +129,14 @@ class BaseFederated(object):
             for X, y in testDataLoader:
                 if self.gpu:
                     X, y = X.cuda(), y.cuda()
-                    pred = self.model(X)
-                    loss = criterion(pred, y)
-                    _, predicted = torch.max(pred, 1)
+                pred = self.model(X)
+                loss = criterion(pred, y)
+                _, predicted = torch.max(pred, 1)
 
-                    correct = predicted.eq(y).sum()
-                    test_acc += correct.item()
-                    test_loss += loss.item() * y.size(0)
-                    test_total += y.size(0)
+                correct = predicted.eq(y).sum()
+                test_acc += correct.item()
+                test_loss += loss.item() * y.size(0)
+                test_total += y.size(0)
 
         stats = {'acc': test_acc / test_total,
                  'loss': test_loss / test_total,
